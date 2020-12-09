@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4973237980394367210}
+  - component: {fileID: -8732460886599159751}
   m_Layer: 0
   m_Name: 8x8_8entrance
   m_TagString: Untagged
@@ -35,6 +36,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8732460886599159751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4973237980394367213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67da305ad563a24db10434a1cfbf5b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  length: 8
+  height: 8
+  exitNorthOffsets: fdffffff03000000
+  exitEastOffsets: fdffffff03000000
+  exitSouthOffsets: fdffffff03000000
+  exitWestOffsets: fdffffff03000000
 --- !u!1 &4973237981624400156
 GameObject:
   m_ObjectHideFlags: 0
