@@ -42,7 +42,7 @@ public class AreaPartPicker : MonoBehaviour
     private void ShowSelectedAreaAtCursor()
     {
         SetPreviewMeshes();
-        SetPreviewLocation(getCursorPositionOnBuildingPlane());
+        SetPreviewLocation();
         SetPreviewMaterial(validMaterial);
     }
 
@@ -65,9 +65,14 @@ public class AreaPartPicker : MonoBehaviour
         }
     }
 
-    private void SetPreviewLocation(Vector3 vector3)
+    private Vector3 LockToUnitGrid(Vector3 unlocked)
     {
-        this._areaPreview.transform.position = getCursorPositionOnBuildingPlane() + new Vector3(0,.5f,0);
+        return new Vector3(Mathf.Round(unlocked.x), Mathf.Round(unlocked.y), Mathf.Round(unlocked.z));
+    }
+
+    private void SetPreviewLocation()
+    {
+        this._areaPreview.transform.position = LockToUnitGrid(getCursorPositionOnBuildingPlane()) + new Vector3(0,.2f,0);
     }
 
     private Vector3 getCursorPositionOnBuildingPlane()
