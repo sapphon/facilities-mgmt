@@ -31,6 +31,11 @@ public class AreaPartPicker : MonoBehaviour
     {
         if (_selectedArea != null)
         {
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                _selectedArea = null;
+                return;
+            }
             ShowSelectedAreaAtCursor();
         }
         else
@@ -59,9 +64,16 @@ public class AreaPartPicker : MonoBehaviour
 
     private void SetPreviewMaterial(Material toSet)
     {
+
         foreach (MeshRenderer renderer in this._areaPreview.GetComponentsInChildren<MeshRenderer>())
         {
-            renderer.material = toSet;
+            if (toSet == null)
+            {
+                renderer.enabled = false;
+            }else{ 
+                renderer.enabled = true;
+                renderer.material = toSet;
+            }
         }
     }
 
