@@ -12,13 +12,16 @@ public class AreaPartPicker : MonoBehaviour
     
     public GameObject paneTemplate;
     public Material validMaterial;
+    public Material invalidMaterial;
     private GameObject _selectedArea;
     private Plane _areaPartSurface;
     private GameObject _areaPreview;
+    private BuildModeLevelModel _buildModeLevelModel;
 
     void Start()
     {
-        GameObject[] areaPrefabs = FindObjectOfType<BuildModeLevelModel>().areaParts;
+        _buildModeLevelModel = FindObjectOfType<BuildModeLevelModel>();
+        GameObject[] areaPrefabs = _buildModeLevelModel.areaParts;
         float buttonHeight = paneTemplate.GetComponent<RectTransform>().rect.height;
         this._selectedArea = null;
         this._areaPartSurface = new Plane(Vector3.up, 0);
@@ -52,7 +55,7 @@ public class AreaPartPicker : MonoBehaviour
     {
         SetPreviewMeshes();
         SetPreviewLocation();
-        SetPreviewMaterial(validMaterial);
+        SetPreviewMaterial(_buildModeLevelModel.IsValidNextPlacement(_areaPreview) ? validMaterial : invalidMaterial);
     }
 
     private void SetPreviewMeshes()

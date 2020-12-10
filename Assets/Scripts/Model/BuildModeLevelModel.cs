@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,12 @@ public class BuildModeLevelModel : MonoBehaviour
 
     public bool IsValidNextPlacement(GameObject part)
     {
-        return true;
+        if (Math.Abs(part.transform.position.x % 2) < 0.001)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     // Start is called before the first frame update
