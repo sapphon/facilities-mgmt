@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaModel : MonoBehaviour{
+public class AreaPartModel : MonoBehaviour{
 
 public int length;
 public int height;

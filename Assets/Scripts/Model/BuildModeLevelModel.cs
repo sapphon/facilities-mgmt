@@ -7,6 +7,14 @@ public class BuildModeLevelModel : MonoBehaviour
     public GameObject[] areaParts;
     public int[] numberOfPartsRequired;
     public int[] numberOfPartsAllowed;
+
+    private GameObject[] _builtParts;
+
+    public bool IsValidNextPlacement(GameObject part)
+    {
+        return true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,4 +25,6 @@ public class BuildModeLevelModel : MonoBehaviour
     {
         
     }
+    
+    
 }

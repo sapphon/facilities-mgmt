@@ -21,7 +21,7 @@ public class AreaPartPicker : MonoBehaviour
         GameObject[] areaPrefabs = FindObjectOfType<BuildModeLevelModel>().areaParts;
         float buttonHeight = paneTemplate.GetComponent<RectTransform>().rect.height;
         this._selectedArea = null;
-        this._areaPartSurface = new Plane(new Vector3(0, 1, 0), 0);
+        this._areaPartSurface = new Plane(Vector3.up, 0);
         this._areaPreview = new GameObject();
         AddButtonsToPanel(areaPrefabs, buttonHeight);
         ResizePanelToFitButtons(areaPrefabs, buttonHeight);
@@ -35,6 +35,10 @@ public class AreaPartPicker : MonoBehaviour
             {
                 _selectedArea = null;
                 return;
+            }
+            else if (Input.GetKeyUp(KeyCode.R))
+            {
+             _selectedArea.transform.Rotate(Vector3.up, 90);   
             }
             ShowSelectedAreaAtCursor();
         }
