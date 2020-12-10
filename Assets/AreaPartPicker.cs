@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,24 +7,46 @@ using UnityEngine.UI;
 public class AreaPartPicker : MonoBehaviour
 {
 
-    public Sprite buttonBackground;
-    // Start is called before the first frame update
+    public GameObject paneTemplate;
     void Start()
     {
         GameObject[] areaPrefabs = FindObjectOfType<BuildModeLevelModel>().areaParts;
+        float buttonHeight = paneTemplate.GetComponent<RectTransform>().rect.height;
+        
+        AddButtonsToPanel(areaPrefabs, buttonHeight);
+        ResizePanelToFitButtons(areaPrefabs, buttonHeight);
+    }
+
+    private void AddButtonsToPanel(GameObject[] areaPrefabs, float buttonHeight)
+    {
         for (int i = 0; i < areaPrefabs.Length; i++)
         {
-            GameObject buttonObject = DefaultControls.CreateButton(new DefaultControls.Resources());
-            buttonObject.transform.SetParent(this.gameObject.transform);
-            Text buttonText = buttonObject.GetComponentInChildren<Text>();
-            buttonText.text = areaPrefabs[i].name;
-            Image buttonImage = buttonObject.GetComponent<Image>();
-            buttonImage.sprite = buttonBackground;
+            var paneObject = CreateButton();
+            PositionButtonVertically(-i * (buttonHeight + 5f), paneObject);
+            SetButtonText(areaPrefabs[i].name, paneObject);
         }
     }
 
-// Update is called once per frame
-    void Update()
+    private static void PositionButtonVertically(float offset, GameObject paneObject)
     {
+        paneObject.transform.Translate(0, offset, 0);
+    }
+
+    private GameObject CreateButton()
+    {
+        return Instantiate(paneTemplate, this.gameObject.transform);
+    }
+
+    private static void SetButtonText(String text, GameObject paneObject)
+    {
+        GameObject buttonObject = paneObject.GetComponentInChildren<Button>().gameObject;
+        Text buttonText = buttonObject.GetComponentInChildren<Text>();
+        buttonText.text = text;
+    }
+
+    private void ResizePanelToFitButtons(GameObject[] areaPrefabs, float buttonHeight)
+    {
+        this.GetComponent<RectTransform>()
+            .SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, areaPrefabs.Length * (buttonHeight + 5f) - 5f);
     }
 }
