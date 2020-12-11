@@ -348,7 +348,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -404,13 +404,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.60273, y: -0.16936156, z: 0.16035455, w: 0.7630987}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 76.957, y: -16.786, z: 10.357}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +559,8 @@ MonoBehaviour:
   - {fileID: 4609647676466763977, guid: f95407215d3a47b46888ba2a4b692edc, type: 3}
   - {fileID: 5561114720498360642, guid: 8417ea8373434d543a83171324b51ec6, type: 3}
   - {fileID: 1524286335683313795, guid: efd87d06f2a892a44a570bb8c8e3229c, type: 3}
+  - {fileID: 6800239622905246760, guid: ed844a371138a384d94013218e4d1a1b, type: 3}
+  - {fileID: 4974080008938719755, guid: 1e2207de366b785439ddfea33005be81, type: 3}
   playSurfaceLength: 80
   playSurfaceHeight: 80
   playSurfaceMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}

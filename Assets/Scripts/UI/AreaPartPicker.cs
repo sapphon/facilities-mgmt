@@ -116,7 +116,12 @@ public class AreaPartPicker : MonoBehaviour
     private void SetPreviewLocation()
     {
         this._areaPreview.transform.position =
-            LockToUnitGrid(getCursorPositionOnBuildingPlane()) + new Vector3(0, .2f, 0);
+            LockToUnitGrid(getCursorPositionOnBuildingPlane()) + new Vector3(0, getYOffset(), 0);
+    }
+
+    private float getYOffset()
+    {
+        return _areaPreview.GetComponent<AreaPartModel>() == null ? 2f : .2f;
     }
 
     public void SetSelectedArea(int index)

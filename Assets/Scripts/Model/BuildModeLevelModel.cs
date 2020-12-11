@@ -40,11 +40,19 @@ public class BuildModeLevelModel : MonoBehaviour
 
     public void Place(GameObject part)
     {
-        if (part != null && IsValidNextPlacement(part))
+        if (part != null)
         {
-            GameObject instantiated = Instantiate(part);
-            UU.GetOrAddComponent<AreaPartController>(instantiated).SetPartMaterial(playSurfaceMaterial);
-            this._builtParts.Add(instantiated);
+            if (part.GetComponent<AreaPartModel>() != null && IsValidNextPlacement(part))
+            {
+                GameObject instantiated = Instantiate(part);
+                UU.GetOrAddComponent<AreaPartController>(instantiated).SetPartMaterial(playSurfaceMaterial);
+                this._builtParts.Add(instantiated);
+            }
+            else if (part.GetComponent<DefenseModel>() != null)
+            {
+                GameObject instantiated = Instantiate(part);
+                this._builtParts.Add(instantiated);
+            }
         }
     }
     
