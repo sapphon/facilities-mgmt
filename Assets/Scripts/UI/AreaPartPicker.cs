@@ -119,6 +119,11 @@ public class AreaPartPicker : MonoBehaviour
             LockToUnitGrid(getCursorPositionOnBuildingPlane()) + new Vector3(0, .2f, 0);
     }
 
+    public void SetSelectedArea(int index)
+    {
+        this._selectedArea = _buildModeLevelModel.areaParts[index];
+    }
+
     private Vector3 getCursorPositionOnBuildingPlane()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -132,26 +137,15 @@ public class AreaPartPicker : MonoBehaviour
 
     private void AddButtonsToPanel(GameObject[] areaPrefabs, float buttonHeight)
     {
-        void buttonClicked(int index)
-        {
-            this._selectedArea = areaPrefabs[index];
-        }
 
         for (int i = 0; i < areaPrefabs.Length; i++)
         {
             GameObject paneObject = CreateButton();
             PositionButtonVertically(-i * (buttonHeight + 5f), paneObject);
-            Button button = paneObject.GetComponentInChildren<Button>();
-            SetButtonText(areaPrefabs[i].name, button.gameObject);
             int youHaveToDoThisInCSharpItsSilly = i;
             UU.GetOrAddComponent<AreaPartPaneController>(paneObject).areaPartIndex = youHaveToDoThisInCSharpItsSilly;
-            SetButtonCallback(() => buttonClicked(youHaveToDoThisInCSharpItsSilly), button);
-        }
-    }
 
-    private void SetButtonCallback(UnityAction action, Button button)
-    {
-        button.onClick.AddListener(action);
+        }
     }
 
     private static void PositionButtonVertically(float offset, GameObject paneObject)
@@ -162,12 +156,6 @@ public class AreaPartPicker : MonoBehaviour
     private GameObject CreateButton()
     {
         return Instantiate(paneTemplate, this.gameObject.transform);
-    }
-
-    private static void SetButtonText(String text, GameObject buttonObject)
-    {
-        Text buttonText = buttonObject.GetComponentInChildren<Text>();
-        buttonText.text = text;
     }
 
     private void ResizePanelToFitButtons(GameObject[] areaPrefabs, float buttonHeight)
