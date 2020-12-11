@@ -22,6 +22,7 @@ namespace UI
 
         void Update()
         {
+            
             SetPaneText(_levelModel.getNumberOfPartsUsed(this.areaPartIndex), _levelModel.numberOfPartsRequired[this.areaPartIndex], _levelModel.numberOfPartsAllowed[this.areaPartIndex]);
         }
         
