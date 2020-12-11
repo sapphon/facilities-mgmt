@@ -1,29 +1,43 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildModeLevelModel : MonoBehaviour
 {
     public GameObject[] areaParts;
+    public int playSurfaceWidth;
+    public int playSurfaceHeight;
     public int[] numberOfPartsRequired;
     public int[] numberOfPartsAllowed;
 
-    private GameObject[] _builtParts;
+    private List<GameObject> _builtParts;
 
     public bool IsValidNextPlacement(GameObject part)
     {
-        if (Math.Abs(part.transform.position.x % 2) < 0.001)
-        {
-            return true;
-        }
+        return withinBounds(part);
+    }
 
-        return false;
+    private bool withinBounds(GameObject part)
+    {
+        return true;
+    }
+
+
+
+    public void Place(GameObject part)
+    {
+        if (part != null && IsValidNextPlacement(part))
+        {
+            this._builtParts.Add(Instantiate(part));
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        _builtParts = new List<GameObject>();
     }
 
     // Update is called once per frame

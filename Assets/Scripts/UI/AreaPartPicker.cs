@@ -39,6 +39,10 @@ public class AreaPartPicker : MonoBehaviour
                 _selectedArea = null;
                 return;
             }
+            else if (Input.GetKeyUp(KeyCode.Return))
+            {
+                _buildModeLevelModel.Place(_areaPreview);
+            }
             else if (Input.GetKeyUp(KeyCode.R))
             {
              _selectedArea.transform.Rotate(Vector3.up, 90);   
@@ -86,7 +90,25 @@ public class AreaPartPicker : MonoBehaviour
 
     private Vector3 LockToUnitGrid(Vector3 unlocked)
     {
-        return new Vector3(Mathf.Round(unlocked.x), Mathf.Round(unlocked.y), Mathf.Round(unlocked.z));
+        return new Vector3(roundToHalf(unlocked.x), roundToHalf(unlocked.y), roundToHalf(unlocked.z));
+    }
+
+    float roundToHalf(float input)
+    {
+        float floor = Mathf.Floor(input);
+        float relevant = input - floor;
+        if (relevant < .25)
+        {
+            return floor;
+        }
+        else if (relevant < .75)
+        {
+            return floor + .5f;
+        }
+        else
+        {
+            return floor + 1f;
+        }
     }
 
     private void SetPreviewLocation()
@@ -96,9 +118,8 @@ public class AreaPartPicker : MonoBehaviour
 
     private Vector3 getCursorPositionOnBuildingPlane()
     {
-        float distance;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (_areaPartSurface.Raycast(ray, out distance))
+        if (_areaPartSurface.Raycast(ray, out var distance))
         {
             return ray.GetPoint(distance);
         }
