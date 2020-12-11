@@ -9,6 +9,7 @@ public class BuildModeLevelModel : MonoBehaviour
     public GameObject[] areaParts;
     public int playSurfaceLength;
     public int playSurfaceHeight;
+    public Material playSurfaceMaterial;
     public int[] numberOfPartsRequired;
     public int[] numberOfPartsAllowed;
 
@@ -36,7 +37,9 @@ public class BuildModeLevelModel : MonoBehaviour
     {
         if (part != null && IsValidNextPlacement(part))
         {
-            this._builtParts.Add(Instantiate(part));
+            GameObject instantiated = Instantiate(part);
+            UU.GetOrAddComponent<AreaPartController>(instantiated).SetPartMaterial(playSurfaceMaterial);
+            this._builtParts.Add(instantiated);
         }
     }
 
