@@ -7,15 +7,17 @@ public class UIModeController : MonoBehaviour
 {
     private BuildModeLevelModel _buildModeModel;
     private Text _buttonText;
+    private string _mode;
 
-    // Start is called before the first frame update
     void Start()
     {
+        this._mode = "BUILD";
         this._buildModeModel = FindObjectOfType<BuildModeLevelModel>();
-        this._buttonText = GetComponentInChildren<Button>().GetComponentInChildren<Text>();
+        Button button = GetComponentInChildren<Button>();
+        this._buttonText = button.GetComponentInChildren<Text>();
+        button.onClick.AddListener(() => { this.tryAdvanceModes(); });
     }
 
-    // Update is called once per frame
     void Update()
     {
         SetButtonText();
@@ -23,6 +25,27 @@ public class UIModeController : MonoBehaviour
 
     void SetButtonText()
     {
-        this._buttonText.text = _buildModeModel.AllRequirementsMet() ? "FINISH BUILD" : "COMPANY REQS NOT MET";
+        this._buttonText.text = this._mode == "BUILD" ? getBuildModeText() : getInfiltrateModeText();
+    }
+
+    private string getInfiltrateModeText()
+    {
+        return "Infiltrating...";
+    }
+
+    private string getBuildModeText()
+    {
+        return _buildModeModel.AllRequirementsMet() ? "FINISH BUILD" : "COMPANY REQS NOT MET";
+    }
+
+    bool tryAdvanceModes()
+    {
+        if (this._mode == "BUILD" && _buildModeModel.AllRequirementsMet())
+        {
+            this._mode = "INFILTRATE";
+            return true;
+        }
+
+        return false;
     }
 }
