@@ -99,6 +99,17 @@ public class BuildModeLevelModel : MonoBehaviour
     {
         
     }
-    
-    
+
+
+    public bool AllRequirementsMet()
+    {
+        for (int i = 0; i < numberOfPartsRequired.Length; i++)
+        {
+            if (getNumberOfPartsUsed(i) < numberOfPartsRequired[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
