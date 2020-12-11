@@ -138,9 +138,17 @@ public class AreaPartPicker : MonoBehaviour
             PositionButtonVertically(-i * (buttonHeight + 5f), paneObject);
             Button button = paneObject.GetComponentInChildren<Button>();
             SetButtonText(areaPrefabs[i].name, button.gameObject);
+            SetPaneText(0, _buildModeLevelModel.numberOfPartsRequired[i], _buildModeLevelModel.numberOfPartsAllowed[i],
+                paneObject);
             int youHaveToDoThisInCSharpItsSilly = i;
             SetButtonCallback(() => buttonClicked(youHaveToDoThisInCSharpItsSilly), button);
         }
+    }
+
+    private void SetPaneText(int used, int required, int availableTotal, GameObject paneObject)
+    {
+        Text[] componentsInChildren = paneObject.GetComponentsInChildren<Text>();
+        componentsInChildren[componentsInChildren.Length - 1].text = componentsInChildren[componentsInChildren.Length - 1].text.Replace("USED?", used + " USED").Replace("REQUIRED?", required + " REQUIRED").Replace("MAX?", availableTotal + " MAXIMUM");
     }
 
     private void SetButtonCallback(UnityAction action, Button button)
