@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class AreaPartPaneController : MonoBehaviour
+    public class ConstructionPaneController : MonoBehaviour
     {
         private BuildModeLevelModel _levelModel;
         public int areaPartIndex;
@@ -13,7 +13,7 @@ namespace UI
         {
             void buttonClicked(int index)
             {
-                FindObjectOfType<AreaPartPicker>().SetSelectedArea(index);
+                FindObjectOfType<ConstructionPicker>().SetSelectedArea(index);
             }
             this._levelModel = FindObjectOfType<BuildModeLevelModel>();
             SetButtonText(_levelModel.areaParts[areaPartIndex].name, GetComponentInChildren<Button>().gameObject);

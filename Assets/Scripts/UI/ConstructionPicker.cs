@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class AreaPartPicker : MonoBehaviour
+public class ConstructionPicker : MonoBehaviour
 {
     public GameObject paneTemplate;
     public Material validMaterial;
@@ -148,7 +148,7 @@ public class AreaPartPicker : MonoBehaviour
             GameObject paneObject = CreateButton();
             PositionButtonVertically(-i * (buttonHeight + 5f), paneObject);
             int youHaveToDoThisInCSharpItsSilly = i;
-            UU.GetOrAddComponent<AreaPartPaneController>(paneObject).areaPartIndex = youHaveToDoThisInCSharpItsSilly;
+            UU.GetOrAddComponent<ConstructionPaneController>(paneObject).areaPartIndex = youHaveToDoThisInCSharpItsSilly;
 
         }
     }
