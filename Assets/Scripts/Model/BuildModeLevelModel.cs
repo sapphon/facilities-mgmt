@@ -22,10 +22,12 @@ public class BuildModeLevelModel : MonoBehaviour
     private bool withinBounds(GameObject part)
     {
         AreaPartModel areaPartModel = part.GetComponent<AreaPartModel>();
-        float validZMax = (playSurfaceHeight / 2) - (areaPartModel.height / 2);
-        float validXMax = (playSurfaceLength / 2) - (areaPartModel.length / 2);
+        float validZMax = (playSurfaceHeight / 2) - ((areaPartModel.areDimensionsFlipped() ? areaPartModel.length : areaPartModel.height) / 2);
+        float validXMax = (playSurfaceLength / 2) - ((areaPartModel.areDimensionsFlipped() ? areaPartModel.height : areaPartModel.length) / 2);
         var position = part.transform.position;
         return position.z <= validZMax && position.x <= validXMax && position.x >= -validXMax && position.z >= -validZMax;
+        
+
     }
 
 

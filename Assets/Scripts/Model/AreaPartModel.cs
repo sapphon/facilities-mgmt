@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,5 +22,10 @@ public int[] exitWestOffsets;
     void Update()
     {
         
+    }
+
+    public bool areDimensionsFlipped()
+    {
+        return Math.Abs(Math.Abs(this.transform.localRotation.y) - 0.7f) < 0.1f;
     }
 }
