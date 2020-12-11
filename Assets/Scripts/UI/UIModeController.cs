@@ -8,11 +8,13 @@ public class UIModeController : MonoBehaviour
     private BuildModeLevelModel _buildModeModel;
     private Text _buttonText;
     private string _mode;
+    private InfiltrationModeController _infilModeController;
 
     void Start()
     {
         this._mode = "BUILD";
         this._buildModeModel = FindObjectOfType<BuildModeLevelModel>();
+        this._infilModeController = FindObjectOfType<InfiltrationModeController>();
         Button button = GetComponentInChildren<Button>();
         this._buttonText = button.GetComponentInChildren<Text>();
         button.onClick.AddListener(() => { this.tryAdvanceModes(); });
@@ -43,6 +45,7 @@ public class UIModeController : MonoBehaviour
         if (this._mode == "BUILD" && _buildModeModel.AllRequirementsMet())
         {
             this._mode = "INFILTRATE";
+            _infilModeController.InfiltrationModeBegun();
             return true;
         }
 

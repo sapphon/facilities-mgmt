@@ -112,4 +112,19 @@ public class BuildModeLevelModel : MonoBehaviour
         }
         return true;
     }
+
+    public List<GameObject> getBuiltAreas()
+    {
+        List<GameObject> toReturn = new List<GameObject>();
+        foreach (var part in _builtParts)
+        {
+            AreaPartModel areaPartModel = part.GetComponent<AreaPartModel>();
+            if (areaPartModel != null)
+            {
+                toReturn.Add(part);
+            }
+        }
+
+        return toReturn;
+    }
 }
