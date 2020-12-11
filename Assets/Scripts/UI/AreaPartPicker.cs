@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,7 +10,6 @@ using UnityEngine.UI;
 
 public class AreaPartPicker : MonoBehaviour
 {
-    
     public GameObject paneTemplate;
     public Material validMaterial;
     public Material invalidMaterial;
@@ -45,8 +45,9 @@ public class AreaPartPicker : MonoBehaviour
             }
             else if (Input.GetKeyUp(KeyCode.R))
             {
-             _selectedArea.transform.Rotate(Vector3.up, 90);   
+                _selectedArea.transform.Rotate(Vector3.up, 90);
             }
+
             ShowSelectedAreaAtCursor();
         }
         else
@@ -75,13 +76,14 @@ public class AreaPartPicker : MonoBehaviour
 
     private void SetPreviewMaterial(Material toSet)
     {
-
         foreach (MeshRenderer renderer in this._areaPreview.GetComponentsInChildren<MeshRenderer>())
         {
             if (toSet == null)
             {
                 renderer.enabled = false;
-            }else{ 
+            }
+            else
+            {
                 renderer.enabled = true;
                 renderer.material = toSet;
             }
@@ -113,7 +115,8 @@ public class AreaPartPicker : MonoBehaviour
 
     private void SetPreviewLocation()
     {
-        this._areaPreview.transform.position = LockToUnitGrid(getCursorPositionOnBuildingPlane()) + new Vector3(0,.2f,0);
+        this._areaPreview.transform.position =
+            LockToUnitGrid(getCursorPositionOnBuildingPlane()) + new Vector3(0, .2f, 0);
     }
 
     private Vector3 getCursorPositionOnBuildingPlane()
@@ -123,6 +126,7 @@ public class AreaPartPicker : MonoBehaviour
         {
             return ray.GetPoint(distance);
         }
+
         throw new Exception("Cannot find building surface");
     }
 
@@ -132,23 +136,17 @@ public class AreaPartPicker : MonoBehaviour
         {
             this._selectedArea = areaPrefabs[index];
         }
+
         for (int i = 0; i < areaPrefabs.Length; i++)
         {
-            var paneObject = CreateButton();
+            GameObject paneObject = CreateButton();
             PositionButtonVertically(-i * (buttonHeight + 5f), paneObject);
             Button button = paneObject.GetComponentInChildren<Button>();
             SetButtonText(areaPrefabs[i].name, button.gameObject);
-            SetPaneText(0, _buildModeLevelModel.numberOfPartsRequired[i], _buildModeLevelModel.numberOfPartsAllowed[i],
-                paneObject);
             int youHaveToDoThisInCSharpItsSilly = i;
+            UU.GetOrAddComponent<AreaPartPaneController>(paneObject).areaPartIndex = youHaveToDoThisInCSharpItsSilly;
             SetButtonCallback(() => buttonClicked(youHaveToDoThisInCSharpItsSilly), button);
         }
-    }
-
-    private void SetPaneText(int used, int required, int availableTotal, GameObject paneObject)
-    {
-        Text[] componentsInChildren = paneObject.GetComponentsInChildren<Text>();
-        componentsInChildren[componentsInChildren.Length - 1].text = componentsInChildren[componentsInChildren.Length - 1].text.Replace("USED?", used + " USED").Replace("REQUIRED?", required + " REQUIRED").Replace("MAX?", availableTotal + " MAXIMUM");
     }
 
     private void SetButtonCallback(UnityAction action, Button button)

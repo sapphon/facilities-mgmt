@@ -31,6 +31,11 @@ public class BuildModeLevelModel : MonoBehaviour
 
     }
 
+    public int getNumberOfPartsUsed(int index)
+    {
+        return _builtParts.Count(p => identifyPartIndex(p) == index);
+    }
+
 
 
     public void Place(GameObject part)
@@ -41,6 +46,38 @@ public class BuildModeLevelModel : MonoBehaviour
             UU.GetOrAddComponent<AreaPartController>(instantiated).SetPartMaterial(playSurfaceMaterial);
             this._builtParts.Add(instantiated);
         }
+    }
+    
+    public int getNumberRequired(GameObject part)
+    {
+        if (part != null && identifyPartIndex(part) >= 0)
+        {
+            return this.numberOfPartsRequired[identifyPartIndex(part)];
+        }
+        else throw new Exception("Cannot get number of part required: no such part in model");
+    }
+    
+    public int getNumberMaximum(GameObject part)
+    {
+        if (part != null && identifyPartIndex(part) >= 0)
+        {
+            return this.numberOfPartsAllowed[identifyPartIndex(part)];
+        }
+        else throw new Exception("Cannot get number of part allowed max: no such part in model");
+    }
+
+    public int identifyPartIndex(GameObject part)
+    {
+        for (int i = 0; i < this.areaParts.Length; i++)
+        {
+            string partNameScrubbed = part.name.Replace("(Clone)", "");
+            if (partNameScrubbed == areaParts[i].name)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     // Start is called before the first frame update
