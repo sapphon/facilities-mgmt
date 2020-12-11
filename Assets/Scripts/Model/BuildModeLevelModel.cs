@@ -7,7 +7,7 @@ using UnityEngine;
 public class BuildModeLevelModel : MonoBehaviour
 {
     public GameObject[] areaParts;
-    public int playSurfaceWidth;
+    public int playSurfaceLength;
     public int playSurfaceHeight;
     public int[] numberOfPartsRequired;
     public int[] numberOfPartsAllowed;
@@ -21,7 +21,11 @@ public class BuildModeLevelModel : MonoBehaviour
 
     private bool withinBounds(GameObject part)
     {
-        return true;
+        AreaPartModel areaPartModel = part.GetComponent<AreaPartModel>();
+        float validZMax = (playSurfaceHeight / 2) - (areaPartModel.height / 2);
+        float validXMax = (playSurfaceLength / 2) - (areaPartModel.length / 2);
+        var position = part.transform.position;
+        return position.z <= validZMax && position.x <= validXMax && position.x >= -validXMax && position.z >= -validZMax;
     }
 
 
