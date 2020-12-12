@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8420336258938445461}
   - component: {fileID: 6289907019443715886}
   - component: {fileID: -2057214799555664825}
-  - component: {fileID: -4479767257251831530}
+  - component: {fileID: 4470435101626373582}
+  - component: {fileID: 5023352607789449932}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -106,19 +107,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a4f04653a128740acc782411d841a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!208 &-4479767257251831530
-NavMeshObstacle:
+--- !u!114 &4470435101626373582
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6800239622905246760}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 5, y: 2.5, z: 5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 4, y: 5, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_Area: 4
+  m_AffectedAgents: ffffffff
+--- !u!114 &5023352607789449932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6800239622905246760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 10, y: 5, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Area: 3
+  m_AffectedAgents: ffffffff
