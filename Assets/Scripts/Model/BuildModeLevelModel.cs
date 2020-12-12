@@ -23,19 +23,19 @@ public class BuildModeLevelModel : MonoBehaviour
     private bool withinBounds(GameObject part)
     {
         AreaPartModel areaPartModel = part.GetComponent<AreaPartModel>();
-        float validZMax = (playSurfaceHeight / 2) - ((areaPartModel.areDimensionsFlipped() ? areaPartModel.length : areaPartModel.height) / 2);
-        float validXMax = (playSurfaceLength / 2) - ((areaPartModel.areDimensionsFlipped() ? areaPartModel.height : areaPartModel.length) / 2);
+        float validZMax = (playSurfaceHeight / 2) -
+                          ((areaPartModel.areDimensionsFlipped() ? areaPartModel.length : areaPartModel.height) / 2);
+        float validXMax = (playSurfaceLength / 2) -
+                          ((areaPartModel.areDimensionsFlipped() ? areaPartModel.height : areaPartModel.length) / 2);
         var position = part.transform.position;
-        return position.z <= validZMax && position.x <= validXMax && position.x >= -validXMax && position.z >= -validZMax;
-        
-
+        return position.z <= validZMax && position.x <= validXMax && position.x >= -validXMax &&
+               position.z >= -validZMax;
     }
 
     public int getNumberOfPartsUsed(int index)
     {
         return _builtParts.Count(p => identifyPartIndex(p) == index);
     }
-
 
 
     public void Place(GameObject part)
@@ -55,7 +55,7 @@ public class BuildModeLevelModel : MonoBehaviour
             }
         }
     }
-    
+
     public int getNumberRequired(GameObject part)
     {
         if (part != null && identifyPartIndex(part) >= 0)
@@ -64,7 +64,7 @@ public class BuildModeLevelModel : MonoBehaviour
         }
         else throw new Exception("Cannot get number of part required: no such part in model");
     }
-    
+
     public int getNumberMaximum(GameObject part)
     {
         if (part != null && identifyPartIndex(part) >= 0)
@@ -97,7 +97,6 @@ public class BuildModeLevelModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
 
@@ -110,6 +109,7 @@ public class BuildModeLevelModel : MonoBehaviour
                 return false;
             }
         }
+
         return true;
     }
 
@@ -126,5 +126,44 @@ public class BuildModeLevelModel : MonoBehaviour
         }
 
         return toReturn;
+    }
+
+    public Rect GetAggregateBoundingRect()
+    {
+        float lowestX = 99999;
+        float lowestZ = 99999;
+        float highestX = -99999;
+        float highestZ = -99999;
+
+        foreach (GameObject built in _builtParts)
+        {
+            AreaPartModel areaPartModel = built.GetComponent<AreaPartModel>();
+            if (areaPartModel != null)
+            {
+                Rect partBoundingRect = areaPartModel.getBoundingRect();
+                if (partBoundingRect.x < lowestX)
+                {
+                    lowestX = partBoundingRect.x;
+                }
+
+                if (partBoundingRect.y < lowestZ)
+                {
+                    lowestZ = partBoundingRect.y;
+                }
+
+                if (partBoundingRect.x > highestX)
+                {
+                    highestX = partBoundingRect.x;
+                }
+
+                if (partBoundingRect.y > highestZ)
+                {
+                    highestZ = partBoundingRect.y;
+                }
+            }
+        }
+
+        return Rect.MinMaxRect(lowestX, lowestZ, highestX, highestZ);
+
     }
 }

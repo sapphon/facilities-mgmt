@@ -311,6 +311,7 @@ GameObject:
   - component: {fileID: 363972537}
   - component: {fileID: 363972536}
   - component: {fileID: 363972535}
+  - component: {fileID: 363972538}
   m_Layer: 5
   m_Name: NextModePanel
   m_TagString: Untagged
@@ -388,6 +389,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 363972533}
   m_CullTransparentMesh: 0
+--- !u!114 &363972538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363972533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf32f24e86031484da42c28b042a4c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  macGuffinPrefab: {fileID: 4157601114219730892, guid: af30ac78f41a3c74199a4b7f4322cbd3, type: 3}
+  infiltratorPrefab: {fileID: 6518161654922491096, guid: 52f773ccf5bef31469571fb43d67fc1b, type: 3}
 --- !u!1 &658884051
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: -12.3, y: 16.4, z: -12.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -972,6 +987,7 @@ GameObject:
   - component: {fileID: 1194699963}
   - component: {fileID: 1194699962}
   - component: {fileID: 1194699961}
+  - component: {fileID: 1194699965}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1056,6 +1072,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1194699965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194699960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 0}
 --- !u!850595691 &1273835017
 LightingSettings:
   m_ObjectHideFlags: 0
