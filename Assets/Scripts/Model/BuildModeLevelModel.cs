@@ -152,19 +152,20 @@ public class BuildModeLevelModel : MonoBehaviour
                     lowestZ = partBoundingRect.y;
                 }
 
-                if (partBoundingRect.x > highestX)
+                if (partBoundingRect.xMax > highestX)
                 {
-                    highestX = partBoundingRect.x;
+                    highestX = partBoundingRect.xMax;
                 }
 
-                if (partBoundingRect.y > highestZ)
+                if (partBoundingRect.yMax > highestZ)
                 {
-                    highestZ = partBoundingRect.y;
+                    highestZ = partBoundingRect.yMax;
                 }
             }
         }
 
-        return Rect.MinMaxRect(lowestX, lowestZ, highestX, highestZ);
+        Rect aggregateBoundingRect = Rect.MinMaxRect(lowestX, lowestZ, highestX, highestZ);
+        return aggregateBoundingRect;
 
     }
 }

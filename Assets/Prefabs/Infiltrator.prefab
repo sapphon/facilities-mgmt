@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2327599696536200024}
   - component: {fileID: 8112404112891865777}
+  - component: {fileID: 3558287061803898649}
   m_Layer: 0
   m_Name: Infiltrator
   m_TagString: Untagged
@@ -54,6 +55,18 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3558287061803898649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6518161654922491096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a283e69f9623dea48bf40e3a5c3df9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7281631474804842725
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +95,7 @@ Transform:
   m_GameObject: {fileID: 7281631474804842725}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 1, z: 0.7}
   m_Children: []
   m_Father: {fileID: 2327599696536200024}
   m_RootOrder: 0
@@ -146,7 +159,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.35
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

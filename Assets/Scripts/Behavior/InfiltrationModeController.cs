@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class InfiltrationModeController : MonoBehaviour
 {
@@ -10,45 +12,55 @@ public class InfiltrationModeController : MonoBehaviour
     public GameObject infiltratorPrefab;
     private Camera _mainCamera;
     private BuildModeLevelModel _buildModeLevelModel;
+    private InfiltrationModeRouteModel _routeModel;
 
     void Start()
     {
         _mainCamera = Camera.main;
         _buildModeLevelModel = FindObjectOfType<BuildModeLevelModel>();
+        _routeModel = FindObjectOfType<InfiltrationModeRouteModel>();
     }
 
     public void InfiltrationModeBegun()
     {
         PlaceMacGuffin();
-        PlaceInfiltrator();
+        Random.InitState(Mathf.FloorToInt(Time.time));
+        for (int i = 0; i < _routeModel.routesToDo; i++)
+        {
+            PlaceInfiltrator();
+        }
     }
 
     private void PlaceInfiltrator()
     {
         Rect bounds = _buildModeLevelModel.GetAggregateBoundingRect();
-        bounds.Set(bounds.x - 5, bounds.y - 5, bounds.width + 10, bounds.height + 10);
-        Vector3 infiltratorStart = PositionNotWithinBounds(bounds);
-        Debug.Log("Placing infiltrator at " + infiltratorStart);
-        GameObject infiltrator = Instantiate(infiltratorPrefab, infiltratorStart, Quaternion.identity);
-        infiltrator.GetComponent<NavMeshAgent>().destination = FindObjectOfType<MacGuffinController>().transform.position;
+        bounds.Set(bounds.xMin - 5, bounds.yMin - 5, bounds.width + 10, bounds.height + 10);
+        Vector3 infiltratorStart = PositionOnRectangle(bounds);
+        Instantiate(infiltratorPrefab, infiltratorStart, Quaternion.identity);
     }
 
-    private Vector3 PositionNotWithinBounds(Rect bounds)
+    private Vector3 PositionOnRectangle(Rect bounds)
     {
-        float x = Random.Range(-_buildModeLevelModel.playSurfaceLength / 2f,
-            (_buildModeLevelModel.playSurfaceLength / 2f - bounds.width));
-        if (x > bounds.xMin)
+        int side = Random.Range(0, 4);
+        Vector2 pointOnRectangle = new Vector2();
+        if (side == 0)
         {
-            x += bounds.width;
+            pointOnRectangle =  Rect.NormalizedToPoint(bounds, new Vector2(Random.value, 0f));
         }
-        float z = Random.Range(-_buildModeLevelModel.playSurfaceHeight / 2f,
-            (_buildModeLevelModel.playSurfaceHeight / 2f - bounds.height));
-        if (z > bounds.yMin)
+        else if (side == 1)
         {
-            z += bounds.height;
+            pointOnRectangle =  Rect.NormalizedToPoint(bounds, new Vector2(1.0f, Random.value));
         }
-
-        return new Vector3(x, 1.2f, z);
+        else if(side == 2)
+        {
+            pointOnRectangle =  Rect.NormalizedToPoint(bounds, new Vector2(Random.value, 1.0f));
+        }
+        else
+        {
+            pointOnRectangle =  Rect.NormalizedToPoint(bounds, new Vector2(0f, Random.value));
+        }
+        
+        return new Vector3(pointOnRectangle.x, 1.2f, pointOnRectangle.y);
     }
 
     private void PlaceMacGuffin()
