@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8420336258938445461}
   - component: {fileID: 6289907019443715886}
   - component: {fileID: -2057214799555664825}
+  - component: {fileID: -4479767257251831530}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -105,3 +106,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a4f04653a128740acc782411d841a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &-4479767257251831530
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6800239622905246760}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5, y: 2.5, z: 5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
