@@ -23,6 +23,7 @@ public class BuildModeLevelModel : MonoBehaviour
     private bool withinBounds(GameObject part)
     {
         AreaPartModel areaPartModel = part.GetComponent<AreaPartModel>();
+        if (areaPartModel == null) return false;
         float validZMax = (playSurfaceHeight / 2) -
                           ((areaPartModel.areDimensionsFlipped() ? areaPartModel.length : areaPartModel.height) / 2);
         float validXMax = (playSurfaceLength / 2) -

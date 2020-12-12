@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class UIModeController : MonoBehaviour
@@ -44,11 +45,17 @@ public class UIModeController : MonoBehaviour
     {
         if (this._mode == "BUILD" && _buildModeModel.AllRequirementsMet())
         {
+            EndBuildMode();
             this._mode = "INFILTRATE";
             _infilModeController.InfiltrationModeBegun();
             return true;
         }
 
         return false;
+    }
+
+    private void EndBuildMode()
+    {
+        FindObjectOfType<NavMeshSurface>().BuildNavMesh();
     }
 }

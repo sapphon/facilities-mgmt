@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class InfiltrationModeController : MonoBehaviour
 {
@@ -25,10 +26,11 @@ public class InfiltrationModeController : MonoBehaviour
     private void PlaceInfiltrator()
     {
         Rect bounds = _buildModeLevelModel.GetAggregateBoundingRect();
-        bounds.Set(bounds.x - 5, bounds.y - 5, bounds.x + 5, bounds.y + 5);
+        bounds.Set(bounds.x - 5, bounds.y - 5, bounds.width + 10, bounds.height + 10);
         Vector3 infiltratorStart = PositionNotWithinBounds(bounds);
         Debug.Log("Placing infiltrator at " + infiltratorStart);
-        Instantiate(infiltratorPrefab, infiltratorStart, Quaternion.identity);
+        GameObject infiltrator = Instantiate(infiltratorPrefab, infiltratorStart, Quaternion.identity);
+        infiltrator.GetComponent<NavMeshAgent>().destination = FindObjectOfType<MacGuffinController>().transform.position;
     }
 
     private Vector3 PositionNotWithinBounds(Rect bounds)
