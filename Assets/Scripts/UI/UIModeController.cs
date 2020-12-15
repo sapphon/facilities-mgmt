@@ -57,5 +57,6 @@ public class UIModeController : MonoBehaviour
     private void EndBuildMode()
     {
         FindObjectOfType<NavMeshSurface>().BuildNavMesh();
+        Destroy(FindObjectOfType<ConstructionPicker>().gameObject);
     }
 }
