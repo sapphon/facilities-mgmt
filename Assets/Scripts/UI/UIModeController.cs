@@ -10,10 +10,12 @@ public class UIModeController : MonoBehaviour
     private Text _buttonText;
     private string _mode;
     private InfiltrationModeController _infilModeController;
+    private UserInterface _ui;
 
     void Start()
     {
         this._mode = "BUILD";
+        this._ui = FindObjectOfType <UserInterface>();
         this._buildModeModel = FindObjectOfType<BuildModeLevelModel>();
         this._infilModeController = FindObjectOfType<InfiltrationModeController>();
         Button button = GetComponentInChildren<Button>();
@@ -33,7 +35,7 @@ public class UIModeController : MonoBehaviour
 
     private string getInfiltrateModeText()
     {
-        return "Infiltrating...";
+        return "Infiltrating..." + (_ui.currentMode == UserInterface.UserInterfaceMode.DEBUG ? " (RESTART)" : "");
     }
 
     private string getBuildModeText()
@@ -50,7 +52,22 @@ public class UIModeController : MonoBehaviour
             _infilModeController.InfiltrationModeBegun();
             return true;
         }
+        else if (
+                 _ui.currentMode == UserInterface.UserInterfaceMode.DEBUG)
+        {
+            return tryRestartMode();
+        }
 
+        return false;
+    }
+
+    bool tryRestartMode()
+    {
+        if (this._mode == "INFILTRATE")
+        {
+            _infilModeController.restartInfiltrationMode();
+            return true;
+        }
         return false;
     }
 

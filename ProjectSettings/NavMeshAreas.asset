@@ -15,8 +15,8 @@ NavMeshProjectSettings:
     cost: 6
   - name: Extremely Lit
     cost: 10
-  - name: 
-    cost: 1
+  - name: Spot-lit
+    cost: 20
   - name: 
     cost: 1
   - name: 

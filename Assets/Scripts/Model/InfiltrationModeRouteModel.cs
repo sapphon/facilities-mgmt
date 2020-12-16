@@ -29,6 +29,11 @@ public class InfiltrationModeRouteModel : MonoBehaviour
         }
     }
 
+    public void clear()
+    {
+        this.recordedRoutes = new List<Route>();
+    }
+
     public List<Route> getRoutes()
     {
         return recordedRoutes;

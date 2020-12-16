@@ -31,6 +31,28 @@ public class InfiltrationModeController : MonoBehaviour
         }
     }
 
+    public void restartInfiltrationMode()
+    {
+        RemoveInfiltrators();
+        RemoveMacguffin();
+        _routeModel.clear();
+        InfiltrationModeBegun();
+    }
+
+    private void RemoveMacguffin()
+    {
+        foreach(MacGuffinController controller in FindObjectsOfType<MacGuffinController>()){
+            Destroy(controller.gameObject);
+        }
+    }
+
+    private void RemoveInfiltrators()
+    {
+        foreach(InfiltratorController controller in FindObjectsOfType<InfiltratorController>()){
+            Destroy(controller.gameObject);
+        }
+    }
+
     private void PlaceInfiltrator()
     {
         Rect bounds = _buildModeLevelModel.GetAggregateBoundingRect();
