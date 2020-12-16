@@ -45,7 +45,7 @@ public class ConstructionPicker : MonoBehaviour
             }
             else if (Input.GetKeyUp(KeyCode.R))
             {
-                _selectedArea.transform.Rotate(Vector3.up, 90);
+                _selectedArea.transform.Rotate(Vector3.up, 90, Space.World);
             }
 
             ShowSelectedAreaAtCursor();
