@@ -17,7 +17,36 @@ public class BuildModeLevelModel : MonoBehaviour
 
     public bool IsValidNextPlacement(GameObject part)
     {
-        return withinBounds(part);
+        return withinBounds(part) && adjacentToExisting(part) && entrancesClear(part) && noOverlapWithExisting(part);
+    }
+
+    private bool noOverlapWithExisting(GameObject part)
+    {
+        AreaPartModel toAddModel = part.GetComponent<AreaPartModel>();
+        if (toAddModel == null) return true;
+        foreach (GameObject built in _builtParts)
+        {
+            AreaPartModel builtModel = built.GetComponent<AreaPartModel>();
+            if (builtModel != null)
+            {
+                if (builtModel.getBoundingRect().Overlaps(toAddModel.getBoundingRect()))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+        
+    }
+
+    private bool entrancesClear(GameObject part)
+    {
+        return true;
+    }
+
+    private bool adjacentToExisting(GameObject part)
+    {
+        return true;
     }
 
     private bool withinBounds(GameObject part)
