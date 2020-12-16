@@ -13,4 +13,11 @@ public class UU
         }
         return gO.AddComponent<T>();
     }
+
+    public static bool IsRectAdjacent(Rect r1, Rect r2)
+    {
+        Rect wide = Rect.MinMaxRect(r1.xMin - 0.5f, r1.yMin, r1.xMax + 0.5f, r1.yMax);
+        Rect loong = Rect.MinMaxRect(r1.xMin, r1.yMin - 0.5f, r1.xMax, r1.yMax + 0.5f);
+        return !r1.Overlaps(r2) && (wide.Overlaps(r2) || loong.Overlaps(r2));
+    }
 }

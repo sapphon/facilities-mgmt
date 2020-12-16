@@ -46,7 +46,13 @@ public class BuildModeLevelModel : MonoBehaviour
 
     private bool adjacentToExisting(GameObject part)
     {
-        return true;
+        AreaPartModel toAddModel = part.GetComponent<AreaPartModel>();
+        if (toAddModel == null) return true;
+        return _builtParts.Count < 1 || _builtParts.Any((built) =>
+                   {
+                       return UU.IsRectAdjacent(toAddModel.getBoundingRect(),
+                           built.GetComponent<AreaPartModel>().getBoundingRect());
+                   });
     }
 
     private bool withinBounds(GameObject part)
