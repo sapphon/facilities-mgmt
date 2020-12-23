@@ -20,20 +20,20 @@ public class AreaPartModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Rotation: " + getNumberOfTimesRotated());
     }
 
     private int getNumberOfTimesRotated()
     {
-        if (UU.IsCloseTo(0, this.transform.rotation.y, 0.5f))
+        float yRotation = this.transform.localEulerAngles.y;
+        if (UU.IsCloseTo(0, yRotation, 0.5f))
         {
             return 0;
         }
-        else if (UU.IsCloseTo(90, this.transform.rotation.y, 0.5f))
+        else if (UU.IsCloseTo(90, yRotation, 0.5f))
         {
             return 1;
         }
-        else if (UU.IsCloseTo(180, this.transform.rotation.y, 0.5f))
+        else if (UU.IsCloseTo(180, yRotation, 0.5f))
         {
             return 2;
         }
