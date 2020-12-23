@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
-public class UU 
+public class UU
 {
     public static T GetOrAddComponent<T>(UnityEngine.GameObject gO) where T : UnityEngine.Component
     {
@@ -11,6 +13,7 @@ public class UU
         {
             return componentMaybe;
         }
+
         return gO.AddComponent<T>();
     }
 
@@ -20,4 +23,17 @@ public class UU
         Rect loong = Rect.MinMaxRect(r1.xMin, r1.yMin - 0.5f, r1.xMax, r1.yMax + 0.5f);
         return !r1.Overlaps(r2) && (wide.Overlaps(r2) || loong.Overlaps(r2));
     }
+
+    public static bool IsRectAdjacent(Rect r1, Vector2 r2)
+    {
+        Rect wide = Rect.MinMaxRect(r1.xMin - 0.5f, r1.yMin, r1.xMax + 0.5f, r1.yMax);
+        Rect loong = Rect.MinMaxRect(r1.xMin, r1.yMin - 0.5f, r1.xMax, r1.yMax + 0.5f);
+        return !r1.Contains(r2) && (wide.Contains(r2) || loong.Contains(r2));
+    }
+
+    public static bool IsCloseTo(float f1, float f2, float acceptableDelta)
+    {
+        return Math.Abs(f1 - f2) < acceptableDelta;
+    }
+
 }

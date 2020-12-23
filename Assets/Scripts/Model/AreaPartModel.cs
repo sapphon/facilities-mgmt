@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 
 public class AreaPartModel : MonoBehaviour
 {
     public int length;
     public int height;
-    public int[] exitNorthOffsets;
-    public int[] exitEastOffsets;
-    public int[] exitSouthOffsets;
-    public int[] exitWestOffsets;
 
+    public Vector2[] exits;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +20,32 @@ public class AreaPartModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("Rotation: " + getNumberOfTimesRotated());
+    }
+
+    private int getNumberOfTimesRotated()
+    {
+        if (UU.IsCloseTo(0, this.transform.rotation.y, 0.5f))
+        {
+            return 0;
+        }
+        else if (UU.IsCloseTo(90, this.transform.rotation.y, 0.5f))
+        {
+            return 1;
+        }
+        else if (UU.IsCloseTo(180, this.transform.rotation.y, 0.5f))
+        {
+            return 2;
+        }
+        else
+        {
+            return 3;
+        }
     }
 
     public bool areDimensionsFlipped()
     {
-        return Math.Abs(Math.Abs(this.transform.localRotation.y) - 0.7f) < 0.1f;
+        return getNumberOfTimesRotated() % 2 != 0;
     }
 
     public float widthAxis()
@@ -44,5 +65,41 @@ public class AreaPartModel : MonoBehaviour
         var position = this.transform.position;
         return Rect.MinMaxRect(position.x - halfWidth, position.z - halfHeight, position.x + halfWidth,
             position.z + halfHeight);
+    }
+
+    public bool isAdjacent(AreaPartModel other)
+    {
+        return UU.IsRectAdjacent(this.getBoundingRect(), other.getBoundingRect());
+    }
+
+    public bool bordersPoint(Vector2 point)
+    {
+        return UU.IsRectAdjacent(this.getBoundingRect(), point);
+    }
+
+    public bool hasEntranceAtPoint(Vector2 point)
+    {
+        if (!bordersPoint(point)) return false;
+        else
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool blocksEntrances(AreaPartModel other)
+    {
+        if (!UU.IsRectAdjacent(other.getBoundingRect(), this.getBoundingRect()))
+        {
+            return false;
+        }
+        else
+        {
+            Rect rect = this.getBoundingRect();
+            return true;
+
+            return false;
+        }
     }
 }
