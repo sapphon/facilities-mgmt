@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,12 +14,14 @@ public class InfiltrationModeController : MonoBehaviour
     private Camera _mainCamera;
     private BuildModeLevelModel _buildModeLevelModel;
     private InfiltrationModeRouteModel _routeModel;
+    private List<SecurityCamera> _cameras;
 
     void Start()
     {
         _mainCamera = Camera.main;
         _buildModeLevelModel = FindObjectOfType<BuildModeLevelModel>();
         _routeModel = FindObjectOfType<InfiltrationModeRouteModel>();
+        _cameras = FindObjectsOfType<SecurityCamera>().ToList();
     }
 
     public void InfiltrationModeBegun()
@@ -29,6 +32,18 @@ public class InfiltrationModeController : MonoBehaviour
         {
             PlaceInfiltrator();
         }
+        ConfigureCameras();
+    }
+
+    private void ConfigureCameras()
+    {
+        _cameras = FindObjectsOfType<SecurityCamera>().ToList();
+        List<InfiltratorController> infiltratorsToWatchFor = GetAllInfiltrators();
+        foreach (SecurityCamera _camera in _cameras)
+        {
+            _camera.SetInfiltrators(infiltratorsToWatchFor);
+            _camera.BeginRecording();
+        }
     }
 
     public void restartInfiltrationMode()
@@ -37,6 +52,12 @@ public class InfiltrationModeController : MonoBehaviour
         RemoveMacguffin();
         _routeModel.clear();
         InfiltrationModeBegun();
+    }
+
+    public List<InfiltratorController> GetAllInfiltrators()
+    {
+        List<InfiltratorController> infiltratorControllers = FindObjectsOfType<InfiltratorController>().ToList();
+        return infiltratorControllers;
     }
 
     private void RemoveMacguffin()

@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4609647676466763977}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -50,10 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   length: 8
   height: 8
-  exitNorthOffsets: 
-  exitEastOffsets: 
-  exitSouthOffsets: fdffffff03000000
-  exitWestOffsets: fdffffff03000000
+  exits: []
 --- !u!1001 &89492479554592714
 PrefabInstance:
   m_ObjectHideFlags: 0

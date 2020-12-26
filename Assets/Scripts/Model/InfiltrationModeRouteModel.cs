@@ -23,10 +23,15 @@ public class InfiltrationModeRouteModel : MonoBehaviour
                 List<Vector3> moves = route.getMoves();
                 for (int i = 0; i < moves.Count - 1; i++)
                 {
-                    Debug.DrawLine(moves[i], moves[i+1], Color.red, 100f);
+                    Debug.DrawLine(moves[i], moves[i+1], getRouteColor(route), 100f);
                 }
             }
         }
+    }
+
+    public Color getRouteColor(Route route)
+    {
+        return route.HasEnded() ? route.WasSuccessful() ? Color.green : Color.red : Color.yellow;
     }
 
     public void clear()

@@ -13,7 +13,6 @@ public class AreaPartController : MonoBehaviour
     void Start()
     {
         obstaclePrefab = Resources.Load<GameObject>("Prefabs/FacilityPieces/Obstacles/StaticObstacle");
-        Debug.Log(obstaclePrefab);
         model = GetComponent<AreaPartModel>();
         GenerateObstacles(model);
     }

@@ -4,6 +4,7 @@ using System.Numerics;
 using Model;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.XR.WSA;
 using Vector3 = UnityEngine.Vector3;
 
 public class InfiltratorController : MonoBehaviour
@@ -26,9 +27,20 @@ public class InfiltratorController : MonoBehaviour
         this._route.AddMove(this.transform.position);
         if (distanceToGoal() < GOAL_THRESHOLD)
         {
+            this._route.Succeed();
             FindObjectOfType<InfiltrationModeRouteModel>().recordFinishedRoute(this._route);
             Destroy(this.gameObject);
         }
+    }
+
+    public void spottedByCamera(SecurityCamera camera)
+    {
+        this._route.AddMove(this.transform.position);
+        this._route.Fail(Route.RouteFailureReason.RECORDED_BY_CAMERA);
+        FindObjectOfType<InfiltrationModeRouteModel>()
+            .recordFinishedRoute(this._route);
+        Destroy(this.gameObject);
+
     }
 
     private float distanceToGoal()
