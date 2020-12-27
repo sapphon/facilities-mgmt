@@ -35,5 +35,10 @@ public class UU
     {
         return Math.Abs(f1 - f2) < acceptableDelta;
     }
+    
+    public static Color InterpolateColor(float value, float maximumPossibleValue, Color maximumColor)
+    {
+        return Color.Lerp( Color.white, maximumColor, value / maximumPossibleValue);
+    }
 
 }

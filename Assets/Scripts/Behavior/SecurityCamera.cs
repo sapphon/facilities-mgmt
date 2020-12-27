@@ -8,6 +8,13 @@ public class SecurityCamera : MonoBehaviour
 
     private List<InfiltratorController> _detectionTargets;
     public bool _isRecording;
+    public float SPOTTING_THRESHOLD;
+
+
+    void Start()
+    {
+        spotScores = new Dictionary<InfiltratorController, float>();
+    }
 
     void Update()
     {
@@ -22,14 +29,35 @@ public class SecurityCamera : MonoBehaviour
                         infiltrator.transform.position - this.transform.position, out hitInfo);
                     if (hitInfo.transform.GetComponent<InfiltratorController>() == infiltrator && infiltrator != null)
                     {
-                        //spotScores[infiltrator] += 1;
-                        //infiltrator.spottedByCamera(this);
+                        increaseSpotScore(infiltrator);
+
                         Debug.DrawRay(this.transform.position,
-                            infiltrator.transform.position - this.transform.position);
+                            infiltrator.transform.position - this.transform.position, getRayColor(spotScores[infiltrator], SPOTTING_THRESHOLD));
+                        if (spotScores[infiltrator] >= SPOTTING_THRESHOLD)
+                        {
+                            infiltrator.spottedByCamera(this);
+                        }
                     }
                 }
             }
         }
+    }
+
+    private void increaseSpotScore(InfiltratorController infiltrator)
+    {
+        if (spotScores.ContainsKey(infiltrator))
+        {
+            spotScores[infiltrator] += 1;
+        }
+        else
+        {
+            spotScores.Add(infiltrator, 1f);
+        }
+    }
+
+    private Color getRayColor(float spotScore, float spottingThreshold)
+    {
+        return UU.InterpolateColor(spotScore, spottingThreshold, Color.blue);
     }
 
     public void SetInfiltrators(List<InfiltratorController> controllers)
