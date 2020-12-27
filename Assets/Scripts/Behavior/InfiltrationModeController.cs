@@ -15,9 +15,11 @@ public class InfiltrationModeController : MonoBehaviour
     private BuildModeLevelModel _buildModeLevelModel;
     private InfiltrationModeRouteModel _routeModel;
     private List<SecurityCamera> _cameras;
+    private int _currentRound;
 
     void Start()
     {
+        _currentRound = 0;
         _mainCamera = Camera.main;
         _buildModeLevelModel = FindObjectOfType<BuildModeLevelModel>();
         _routeModel = FindObjectOfType<InfiltrationModeRouteModel>();
@@ -28,10 +30,18 @@ public class InfiltrationModeController : MonoBehaviour
     {
         PlaceMacGuffin();
         Random.InitState(Mathf.FloorToInt(Time.time));
-        for (int i = 0; i < _routeModel.routesToDo; i++)
+        BeginInfiltrationRound();
+    }
+
+    private void BeginInfiltrationRound()
+    {
+        RemoveInfiltrators();
+
+        for (int i = 0; i < _routeModel.routesToDoPerRound; i++)
         {
             PlaceInfiltrator();
         }
+
         ConfigureCameras();
     }
 
@@ -48,9 +58,9 @@ public class InfiltrationModeController : MonoBehaviour
 
     public void restartInfiltrationMode()
     {
-        RemoveInfiltrators();
         RemoveMacguffin();
         _routeModel.clear();
+        _currentRound = 0;
         InfiltrationModeBegun();
     }
 
@@ -62,14 +72,16 @@ public class InfiltrationModeController : MonoBehaviour
 
     private void RemoveMacguffin()
     {
-        foreach(MacGuffinController controller in FindObjectsOfType<MacGuffinController>()){
+        foreach (MacGuffinController controller in FindObjectsOfType<MacGuffinController>())
+        {
             Destroy(controller.gameObject);
         }
     }
 
     private void RemoveInfiltrators()
     {
-        foreach(InfiltratorController controller in FindObjectsOfType<InfiltratorController>()){
+        foreach (InfiltratorController controller in FindObjectsOfType<InfiltratorController>())
+        {
             Destroy(controller.gameObject);
         }
     }
@@ -88,21 +100,21 @@ public class InfiltrationModeController : MonoBehaviour
         Vector2 pointOnRectangle = new Vector2();
         if (side == 0)
         {
-            pointOnRectangle =  Rect.NormalizedToPoint(bounds, new Vector2(Random.value, 0f));
+            pointOnRectangle = Rect.NormalizedToPoint(bounds, new Vector2(Random.value, 0f));
         }
         else if (side == 1)
         {
-            pointOnRectangle =  Rect.NormalizedToPoint(bounds, new Vector2(1.0f, Random.value));
+            pointOnRectangle = Rect.NormalizedToPoint(bounds, new Vector2(1.0f, Random.value));
         }
-        else if(side == 2)
+        else if (side == 2)
         {
-            pointOnRectangle =  Rect.NormalizedToPoint(bounds, new Vector2(Random.value, 1.0f));
+            pointOnRectangle = Rect.NormalizedToPoint(bounds, new Vector2(Random.value, 1.0f));
         }
         else
         {
-            pointOnRectangle =  Rect.NormalizedToPoint(bounds, new Vector2(0f, Random.value));
+            pointOnRectangle = Rect.NormalizedToPoint(bounds, new Vector2(0f, Random.value));
         }
-        
+
         return new Vector3(pointOnRectangle.x, 1.2f, pointOnRectangle.y);
     }
 
@@ -112,8 +124,22 @@ public class InfiltrationModeController : MonoBehaviour
         GameObject chosenArea = possibleLocations[Random.Range(0, possibleLocations.Count)];
         Instantiate(macGuffinPrefab, chosenArea.transform.position + Vector3.up, Quaternion.identity);
     }
-    
-    void Update()
+
+    private bool lastRoundReached()
     {
+        return this._currentRound >= _routeModel.numberOfRounds;
+    }
+
+    private bool shouldStartNewRound()
+    {
+        return !lastRoundReached() && (_currentRound + 1) * _routeModel.routesToDoPerRound == _routeModel.CountRoutesFinished();
+    }
+
+    void Update()
+    {if(shouldStartNewRound())
+        {
+            this._currentRound++;
+            this.BeginInfiltrationRound();
+        }
     }
 }

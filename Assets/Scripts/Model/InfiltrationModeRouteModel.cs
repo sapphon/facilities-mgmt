@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class InfiltrationModeRouteModel : MonoBehaviour
 {
-    public int routesToDo = 10;
+    public int routesToDoPerRound = 10;
+    public int numberOfRounds = 10;
     private List<Route> recordedRoutes;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class InfiltrationModeRouteModel : MonoBehaviour
                 List<Vector3> moves = route.getMoves();
                 for (int i = 0; i < moves.Count - 1; i++)
                 {
-                    Debug.DrawLine(moves[i], moves[i+1], getRouteColor(route), 100f);
+                    Debug.DrawLine(moves[i], moves[i+1], getRouteColor(route), 5f);
                 }
             }
         }
@@ -39,9 +40,9 @@ public class InfiltrationModeRouteModel : MonoBehaviour
         this.recordedRoutes = new List<Route>();
     }
 
-    public List<Route> getRoutes()
+    public int CountRoutesFinished()
     {
-        return recordedRoutes;
+        return recordedRoutes.Count;
     }
 
     public void recordFinishedRoute(Route done)

@@ -913,7 +913,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac15cd87fb81592448dd6c0c00395611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  routesToDo: 100
+  routesToDoPerRound: 1
+  numberOfRounds: 100
 --- !u!1 &1107191819
 GameObject:
   m_ObjectHideFlags: 0
