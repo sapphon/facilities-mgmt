@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,12 @@ public class SecurityCamera : MonoBehaviour
 
     private List<InfiltratorController> _detectionTargets;
     public bool _isRecording;
-    public float SPOTTING_THRESHOLD;
-
-
+    public float spottingThreshold;
+    [Range(15f, 180f)]
+    public float fovAngleFromCenter;
+    [Range(5f, 100f)] 
+    public float maximumRange;
+    
     void Start()
     {
         spotScores = new Dictionary<InfiltratorController, float>();
@@ -24,23 +28,34 @@ public class SecurityCamera : MonoBehaviour
             {
                 if (infiltrator != null)
                 {
-                    RaycastHit hitInfo;
-                    Physics.Raycast(this.transform.position,
-                        infiltrator.transform.position - this.transform.position, out hitInfo);
-                    if (hitInfo.transform.GetComponent<InfiltratorController>() == infiltrator && infiltrator != null)
+                    var differenceVector = infiltrator.transform.position - this.transform.position;
+                    if (IsInRangeAndAngle(differenceVector))
                     {
-                        increaseSpotScore(infiltrator);
-
-                        Debug.DrawRay(this.transform.position,
-                            infiltrator.transform.position - this.transform.position, getRayColor(spotScores[infiltrator], SPOTTING_THRESHOLD));
-                        if (spotScores[infiltrator] >= SPOTTING_THRESHOLD)
+                        RaycastHit hitInfo;
+                        Physics.Raycast(this.transform.position,
+                            differenceVector, out hitInfo);
+                        if (hitInfo.transform.GetComponent<InfiltratorController>() == infiltrator &&
+                            infiltrator != null)
                         {
-                            infiltrator.spottedByCamera(this);
+                            increaseSpotScore(infiltrator);
+
+                            Debug.DrawRay(this.transform.position,
+                                differenceVector, getRayColor(spotScores[infiltrator], spottingThreshold));
+                            if (spotScores[infiltrator] >= spottingThreshold)
+                            {
+                                infiltrator.spottedByCamera(this);
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    protected virtual bool IsInRangeAndAngle(Vector3 relativePosition)
+    {
+        return Vector3.Angle(this.transform.forward, relativePosition) <= this.fovAngleFromCenter && 
+               Vector3.SqrMagnitude(relativePosition) <= maximumRange * maximumRange;
     }
 
     private void increaseSpotScore(InfiltratorController infiltrator)
