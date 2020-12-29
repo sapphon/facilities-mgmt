@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using Random = System.Random;
 
 public class UU
 {
@@ -41,4 +42,8 @@ public class UU
         return Color.Lerp( Color.white, maximumColor, value / maximumPossibleValue);
     }
 
+    public static T ChooseRandomFromList<T>(List<T> toChooseFrom)
+    {
+        return toChooseFrom[Mathf.FloorToInt(UnityEngine.Random.value * toChooseFrom.Count)];
+    }
 }
